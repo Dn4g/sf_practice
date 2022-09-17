@@ -15,10 +15,12 @@ django_config.vm.provider :virtualbox do |p|
     p.customize ["modifyvm", :id, "--cpuexecutioncap", 50]
   end
 
-  # Configure a synced folder between HOST and GUEST
-  django_config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", :mount_options => ["dmode=777","fmode=777"]
-# Install git for version control, pip for install python packages
-echo 'Installing gkg'
+  # Copy file
+django_config.vm.provision "file", source: "emptyfile", destination: "~/emptyfile"
+end
+
+# python and pip
+echo 'Install packages'
 apt install -y python3 psycopg2
 curl -s https://bootstrap.pypa.io/get-pip.py | python3.4 
 pip3 install django
